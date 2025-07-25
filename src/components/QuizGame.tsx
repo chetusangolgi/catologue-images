@@ -68,7 +68,7 @@ export function QuizGame({
       ></div>
 
       {/* Header and Image Section */}
-   <div className="w-full mx-auto flex flex-col items-center justify-center z-10 h-[50%] mt-40 ">
+   <div className="w-full mx-auto flex flex-col items-center justify-center z-10 h-[50%] mt-60 ">
   {/* Header */}
 <div className="relative z-10 text-center px-4 mb-8 w-[92%]">
   <h2 className="text-[#00B5DB] text-[60px] font-bold leading-tight mb-4">
