@@ -22,7 +22,7 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center text-center px-6 relative">
+    <div className="min-h-screen flex items-center justify-center px-6 py-10 relative gap-[50px]">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -30,10 +30,11 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-sm space-y-8">
-        <h1 className="text-4xl font-bold text-[#00B5DB] pb-4">Catalogue Images</h1>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="w-full max-w-md mx-auto flex flex-col items-center relative z-10">
+   <h1 className="text-[60px] font-bold text-[#00B5DB] text-center mb-12">
+          FBF Quizz
+        </h1>
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-20">
           <div>
             <input
               type="email"
@@ -42,8 +43,8 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
                 setEmail(e.target.value);
                 setIsValid(true);
               }}
-              className={`w-full px-6 py-4 text-white text-center text-lg rounded-xl border ${isValid ? 'border-[#5E7CBA]' : 'border-red-400'
-                } bg-[#5E7CBA]/80 placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300`}
+              className="w-[774px] h-[131px] px-6 py-4 text-[60px] text-white text-center placeholder-white bg-[#5E7CBA]/80 rounded-xl border-2 border-[#2B3990] focus:outline-none focus:ring-2 focus:ring-blue-400"
+
               placeholder="Enter E-mail address"
               required
             />
@@ -54,7 +55,7 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
 
           <button
             type="submit"
-            className="w-full py-4 rounded-full bg-[#4126FF] text-white text-xl font-semibold shadow-md hover:bg-[#321AD9] transition"
+            className="w-[551px] h-[128px] text-[60px] font-semibold text-white bg-[#4126FF] rounded-full hover:bg-[#321AD9] shadow-md transition"
           >
             Submit
           </button>

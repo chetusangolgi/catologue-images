@@ -78,28 +78,44 @@ export function Results({ email, score, totalQuestions, onRestart }: ResultsProp
   }, [onRestart]);
 
   return (
-    <div
-      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-6 relative"
-      style={{ backgroundImage: 'url(/background.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-    >
-      <div className="relative z-10 flex flex-col items-center justify-center">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center text-center px-6 relative">
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/background.png)' }}
+      />
+      <div className="relative z-10 flex flex-col items-center mt-[230px]">
         {/* Trophy or Better Luck Image */}
         <img
           src={isZero ? '/luck.png' : '/congrats.png'}
           alt={isZero ? 'Better luck' : 'Congratulations'}
-          className="w-48 sm:w-56 mb-6"
+    className="w-[700px] mb-0" // ← Removed margin below image
         />
 
-        {/* Text */}
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-          {isZero ? 'Better luck next time!' : 'CONGRATULATIONS!'}
-        </h1>
-        <p className="text-white text-lg sm:text-xl mb-1">You got!</p>
-        <p className="text-white text-5xl sm:text-6xl font-extrabold mb-2">
-          {score}/{totalQuestions}
-        </p>
-        <p className="text-white text-lg sm:text-xl mb-6">Correct answers!</p>
 
+        <div className="mt-[70px]"> {/* Added margin-top to text block */}
+          {isZero ? (
+            <>
+              <h1 className="text-[70px] font-extrabold text-white mb-2 leading-tight">
+                Better luck next time!
+              </h1>
+              <p className="text-white text-[96px] font-bold mb-1 leading-none">
+                {score}/{totalQuestions}
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-[70px] font-extrabold text-white mb-2 leading-[1.1]">
+                CONGRATULATIONS!
+              </h1>
+              <p className="text-white text-[60px] mb-1 leading-[1.1]">You got!</p>
+              <p className="text-white text-[96px] font-bold mb-1 leading-none">
+                {score}/{totalQuestions}
+              </p>
+              <p className="text-white text-[60px] leading-[1.1]">Correct answers!</p>
+            </>
+          )}
+        </div>
 
       </div>
     </div>
