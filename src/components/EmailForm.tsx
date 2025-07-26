@@ -22,18 +22,18 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 py-10 relative gap-[50px]">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/background.png)' }}
-      />
+    <div className="min-h-screen flex items-center justify-center px-2 py-10 relative gap-[50px]">
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: 'url(/background.png)' }}
+  />
 
-      {/* Content */}
-      <div className="w-full max-w-md mx-auto flex flex-col items-center relative z-10">
-   <h1 className="text-[60px] font-bold text-[#00B5DB] text-center mb-12">
-          FBF Quizz
-        </h1>
+  {/* Content */}
+  <div className="w-full max-w-xl mx-auto flex flex-col items-center relative z-10">
+    <h1 className="text-[48px] font-bold text-[#00B5DB] text-center mb-12">
+      Catalogue Images
+    </h1>
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-20">
           <div>
             <input
