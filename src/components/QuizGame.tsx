@@ -48,12 +48,30 @@ export function QuizGame({
   };
 
   const getBorderColor = () => {
+    // Priority 1: Feedback-based border
+    if (showFeedback && feedbackType === 'correct') {
+      return 'border-green-500';
+    }
+    if (showFeedback && feedbackType === 'incorrect') {
+      return 'border-red-500';
+    }
+
+    // Priority 2: Selection-based border (existing logic)
     if (selectedAnswer === 'pass') return 'border-green-500';
     if (selectedAnswer === 'reject') return 'border-red-500';
     return 'border-transparent';
   };
 
   const getGlowClass = () => {
+    // Priority 1: Feedback-based glow
+    if (showFeedback && feedbackType === 'correct') {
+      return 'shadow-[0_0_25px] shadow-green-400';
+    }
+    if (showFeedback && feedbackType === 'incorrect') {
+      return 'shadow-[0_0_25px] shadow-red-400';
+    }
+
+    // Priority 2: Selection-based glow (existing logic)
     if (selectedAnswer === 'pass') return 'shadow-[0_0_25px] shadow-green-400';
     if (selectedAnswer === 'reject') return 'shadow-[0_0_25px] shadow-red-400';
     return 'shadow-none';
@@ -68,15 +86,15 @@ export function QuizGame({
       ></div>
 
       {/* Header and Image Section */}
-   <div className="w-full mx-auto flex flex-col items-center justify-center z-10 h-[50%] mt-60 ">
-  {/* Header */}
-<div className="relative z-10 text-center px-4 mb-8 w-[92%]">
-  <h2 className="text-[#00B5DB] text-[60px] font-bold leading-tight mb-4">
-    Select if the Image is to be
-    rejected or passed as per
-    Catalogue Guidelines
-  </h2>
-</div>
+      <div className="w-full mx-auto flex flex-col items-center justify-center z-10 h-[50%] mt-60 ">
+        {/* Header */}
+        <div className="relative z-10 text-center px-4 mb-8 w-[92%]">
+          <h2 className="text-[#00B5DB] text-[60px] font-bold leading-tight mb-4">
+            Select if the Image is to be
+            rejected or passed as per
+            Catalogue Guidelines
+          </h2>
+        </div>
 
 
 

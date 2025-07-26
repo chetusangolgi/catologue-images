@@ -5,6 +5,7 @@ import { Results } from './components/Results';
 import { GameState } from './types/quiz';
 import { quizQuestions } from './data/quizData';
 import { saveGameResult } from './lib/supabase';
+import { calculateWeightedScore } from './utils/scoreCalculator';
 
 const GAME_DURATION = 120; // 2 minutes in seconds
 
@@ -29,6 +30,8 @@ function App() {
     feedbackType: null,
     timeRemaining: GAME_DURATION,
     gameStartTime: null,
+    gameEndTime: null,
+    finalWeightedScore: null,
   });
 
   const [shuffledQuestions, setShuffledQuestions] = useState(quizQuestions);
@@ -50,7 +53,16 @@ function App() {
       if (interval) clearInterval(interval);
     };
   }, [gameState.currentScreen, gameState.timeRemaining, gameState.showFeedback]);
-
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+  
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
   const handleEmailSubmit = (email: string) => {
     // Shuffle questions when starting the game
     setShuffledQuestions(shuffleArray(quizQuestions));
@@ -65,13 +77,21 @@ function App() {
   };
 
   const handleTimeUp = async () => {
-    // Save results when time is up
+    // Calculate weighted score when time is up
+    const timeElapsed = gameState.gameStartTime ? GAME_DURATION - gameState.timeRemaining : GAME_DURATION;
+    const weightedScoreResult = calculateWeightedScore({
+      correctAnswers: gameState.score,
+      totalQuestions: shuffledQuestions.length,
+      timeElapsed,
+      maxTime: GAME_DURATION
+    });
+
     const gameResult = {
       email: gameState.email,
       game_name: 'findthemyth',
-      score: gameState.score,
+      score: weightedScoreResult.finalScore,
       total_questions: shuffledQuestions.length,
-      percentage: Math.round((gameState.score / shuffledQuestions.length) * 100)
+      percentage: Math.round((weightedScoreResult.finalScore / 10) * 100)
     };
     
     try {
@@ -84,7 +104,9 @@ function App() {
       ...prev,
       currentScreen: 'results',
       showFeedback: false,
-      feedbackType: null
+      feedbackType: null,
+      gameEndTime: Date.now(),
+      finalWeightedScore: weightedScoreResult.finalScore
     }));
   };
 
@@ -106,15 +128,23 @@ function App() {
       const newCurrentQuestion = gameState.currentQuestion + 1;
       
       if (newCurrentQuestion >= shuffledQuestions.length) {
-        // Quiz completed - save results and show results screen
-        const finalScore = gameState.score + (isCorrect ? 1 : 0);
+        // Quiz completed - calculate weighted score and save results
+        const finalCorrectAnswers = gameState.score + (isCorrect ? 1 : 0);
+        const timeElapsed = gameState.gameStartTime ? (Date.now() - gameState.gameStartTime) / 1000 : GAME_DURATION;
+        
+        const weightedScoreResult = calculateWeightedScore({
+          correctAnswers: finalCorrectAnswers,
+          totalQuestions: shuffledQuestions.length,
+          timeElapsed,
+          maxTime: GAME_DURATION
+        });
         
         const gameResult = {
           email: gameState.email,
           game_name: 'findthemyth',
-          score: finalScore,
+          score: weightedScoreResult.finalScore,
           total_questions: shuffledQuestions.length,
-          percentage: Math.round((finalScore / shuffledQuestions.length) * 100)
+          percentage: Math.round((weightedScoreResult.finalScore / 10) * 100)
         };
         
         try {
@@ -127,7 +157,9 @@ function App() {
           ...prev,
           currentScreen: 'results',
           showFeedback: false,
-          feedbackType: null
+          feedbackType: null,
+          gameEndTime: Date.now(),
+          finalWeightedScore: weightedScoreResult.finalScore
         }));
       } else {
         // Move to next question
@@ -152,6 +184,8 @@ function App() {
       feedbackType: null,
       timeRemaining: GAME_DURATION,
       gameStartTime: null,
+      gameEndTime: null,
+      finalWeightedScore: null,
     });
   };
 
@@ -177,7 +211,7 @@ function App() {
       {gameState.currentScreen === 'results' && (
         <Results
           email={gameState.email}
-          score={gameState.score}
+          score={gameState.finalWeightedScore || 0}
           totalQuestions={shuffledQuestions.length}
           onRestart={handleRestart}
         />

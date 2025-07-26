@@ -3,7 +3,7 @@ import { saveCatalogueImageResult } from '../lib/supabase';
 
 interface ResultsProps {
   email: string;
-  score: number;
+  score: number; // This is now the weighted score (0-10)
   totalQuestions: number;
   onRestart: () => void;
 }
@@ -100,7 +100,7 @@ export function Results({ email, score, totalQuestions, onRestart }: ResultsProp
                 Better luck next time!
               </h1>
               <p className="text-white text-[96px] font-bold mb-1 leading-none">
-                {score}/{totalQuestions}
+                {score.toFixed(1)}/10
               </p>
             </>
           ) : (
@@ -108,11 +108,11 @@ export function Results({ email, score, totalQuestions, onRestart }: ResultsProp
               <h1 className="text-[70px] font-extrabold text-white mb-2 leading-[1.1]">
                 CONGRATULATIONS!
               </h1>
-              <p className="text-white text-[60px] mb-1 leading-[1.1]">You got!</p>
+              <p className="text-white text-[60px] mb-1 leading-[1.1]">Your Score:</p>
               <p className="text-white text-[96px] font-bold mb-1 leading-none">
-                {score}/{totalQuestions}
+                {score.toFixed(1)}/10
               </p>
-              <p className="text-white text-[60px] leading-[1.1]">Correct answers!</p>
+              <p className="text-white text-[60px] leading-[1.1]">Points!</p>
             </>
           )}
         </div>

@@ -15,4 +15,6 @@ export interface GameState {
   feedbackType: 'correct' | 'incorrect' | null;
   timeRemaining: number;
   gameStartTime: number | null;
+  gameEndTime: number | null;
+  finalWeightedScore: number | null;
 }
