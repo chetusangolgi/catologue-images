@@ -32,7 +32,7 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
   {/* Content */}
   <div className="w-full max-w-xl mx-auto flex flex-col items-center relative z-10">
     <h1 className="text-[48px] font-bold text-[#00B5DB] text-center mb-12">
-      Catalogue Images
+      Catalogue Images Game
     </h1>
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-20">
           <div>
@@ -57,7 +57,7 @@ export function EmailForm({ onEmailSubmit }: EmailFormProps) {
             type="submit"
             className="w-[551px] h-[128px] text-[60px] font-semibold text-white bg-[#4126FF] rounded-full hover:bg-[#321AD9] shadow-md transition"
           >
-            Submit
+            Play
           </button>
         </form>
       </div>
